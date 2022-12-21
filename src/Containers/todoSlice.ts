@@ -46,8 +46,39 @@ export const todosSlice = createSlice({
   name: 'todoApp',
   initialState,
   reducers: {},
-  extraReducers: (builder) => {}
+  extraReducers: (builder) => {
+    builder.addCase(fetchTodos.pending, (state) => {
+      state.loading = true;
+      state.error = false;
+    });
+    builder.addCase(fetchTodos.fulfilled, (state, action) => {
+      state.todos = Object.keys(action.payload).map((id: string) => {
+        const task = action.payload[id];
+        return {...task, id}
+      });
+      state.loading = false;
+    });
+    builder.addCase(fetchTodos.rejected, (state) => {
+      state.loading = false;
+      state.error = true;
+    });
+    builder.addCase(completeTodos.pending, (state) => {
+      state.loading = true;
+      state.error = false;
+    });
+    builder.addCase(completeTodos.fulfilled, (state) => {
+      state.loading = false;
+      state.error = false;
+    });
+    builder.addCase(removeTodos.pending, (state) => {
+      state.loading = true;
+      state.error = false;
+    });
+    builder.addCase(removeTodos.fulfilled, (state) => {
+      state.loading = false;
+      state.error = false;
+    });
+  }
 });
 
-export const passwordReducer = todosSlice.reducer;
-export const {} = todosSlice.actions;
+export const todoSliceReducer = todosSlice.reducer;

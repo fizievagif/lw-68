@@ -1,14 +1,21 @@
 import React, {useState} from 'react';
-import {TodosItem} from "../../types";
+import {Todos} from "../../types";
+import {AppDispatch} from "../../app/store";
+import {useDispatch} from "react-redux";
+import {addTodos, fetchTodos} from "../../Containers/todoSlice";
 
 const TodoForm = () => {
-  const [todos, setTodos] = useState<TodosItem>({
+  const dispatch: AppDispatch = useDispatch();
+  const [todos, setTodos] = useState<Todos>({
+    id: '',
     state: false,
     text: '',
   });
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    await dispatch(addTodos(todos));
+    await dispatch(fetchTodos());
     setTodos((prev) => ({
       ...prev,
       text: ''
@@ -16,11 +23,11 @@ const TodoForm = () => {
   };
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const {name, value} = e.target;
-
     setTodos((prev) => ({
       ...prev,
-      [name]: value
+      id: Math.random().toString(),
+      state: false,
+      text: e.target.value,
     }));
   };
 
