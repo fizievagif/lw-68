@@ -14,8 +14,10 @@ const TodoForm = () => {
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     await dispatch(addTodos(todos));
     await dispatch(fetchTodos());
+
     setTodos((prev) => ({
       ...prev,
       text: ''
@@ -32,7 +34,7 @@ const TodoForm = () => {
   };
 
   return (
-    <>
+    <div className="mb-3">
       <form onSubmit={onSubmit}>
         <div className="form-group d-flex justify-content-center mt-5 align-items-center">
           <input
@@ -46,7 +48,7 @@ const TodoForm = () => {
           <button className="btn btn-primary mx-3 fw-bold" type="submit">Add Task</button>
         </div>
       </form>
-    </>
+    </div>
   );
 };
 

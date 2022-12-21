@@ -1,19 +1,15 @@
-export interface TodosItem {
+export interface Todos {
+  id: string;
   state: boolean;
   text: string;
 }
 
-export interface Todos extends TodosItem {
-  id: string;
-}
-
 export interface TodosApi {
-  [id: string]: TodosItem;
+  [id: string]: Todos;
 }
 
 export interface TodosType {
   todos: TodosItem[];
-  completeTask: boolean;
   loading: boolean;
   error: boolean;
 }

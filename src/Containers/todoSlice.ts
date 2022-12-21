@@ -4,20 +4,22 @@ import axiosApi from "../axiosApi";
 
 const initialState: TodosType = {
   todos: [],
-  completeTask: false,
   loading: false,
   error: false,
 };
 
-export const fetchTodos = createAsyncThunk<TodosApi>(
+export const fetchTodos = createAsyncThunk(
   'todoApp/fetch',
   async () => {
-    const response = await axiosApi.get<TodosApi>('/todos.json');
-    return response.data ?? [{
-      id: Math.random().toString(),
-      state: false,
-      text: 'No tasks!'
-    }];
+    const response = await axiosApi.get<TodosApi | null>('/todos.json');
+    const todosRequest = response.data;
+
+    let tasks: Todos[] = [];
+
+    if (todosRequest !== null) {
+      tasks = Object.keys(todosRequest).map((id: string) => ({...todosRequest[id], id}));
+    }
+    return tasks;
   }
 );
 
@@ -52,10 +54,7 @@ export const todosSlice = createSlice({
       state.error = false;
     });
     builder.addCase(fetchTodos.fulfilled, (state, action) => {
-      state.todos = Object.keys(action.payload).map((id: string) => {
-        const task = action.payload[id];
-        return {...task, id}
-      });
+      state.todos = action.payload;
       state.loading = false;
     });
     builder.addCase(fetchTodos.rejected, (state) => {
@@ -77,6 +76,10 @@ export const todosSlice = createSlice({
     builder.addCase(removeTodos.fulfilled, (state) => {
       state.loading = false;
       state.error = false;
+    });
+    builder.addCase(removeTodos.rejected, (state) => {
+      state.loading = false;
+      state.error = true;
     });
   }
 });
