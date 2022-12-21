@@ -1,7 +1,7 @@
 import React from 'react';
 import {useDispatch} from "react-redux";
 import {AppDispatch} from "../../app/store";
-import {completeTodos, fetchTodos, removeTodos} from "../todoSlice";
+import {completeTodos, fetchTodos, removeTodos} from "../../Containers/todoSlice";
 
 interface Props {
   id: string;

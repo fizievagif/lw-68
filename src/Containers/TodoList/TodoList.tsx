@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import TodoForm from "../../Components/TodoForm/TodoForm";
 import {AppDispatch, RootState} from "../../app/store";
 import Spinner from "../../Components/Spinner/Spinner";
-import TodoItem from "../TodoItem/TodoItem";
+import TodoItem from "../../Components/TodoItem/TodoItem";
 import {fetchTodos} from "../todoSlice";
 
 const TodoList = () => {

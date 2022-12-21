@@ -1,5 +1,5 @@
 export interface Todos {
-  id: string;
+  id?: string;
   state: boolean;
   text: string;
 }

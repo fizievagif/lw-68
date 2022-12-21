@@ -7,7 +7,6 @@ import {addTodos, fetchTodos} from "../../Containers/todoSlice";
 const TodoForm = () => {
   const dispatch: AppDispatch = useDispatch();
   const [todos, setTodos] = useState<Todos>({
-    id: '',
     state: false,
     text: '',
   });
@@ -27,7 +26,6 @@ const TodoForm = () => {
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTodos((prev) => ({
       ...prev,
-      id: Math.random().toString(),
       state: false,
       text: e.target.value,
     }));
